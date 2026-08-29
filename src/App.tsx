@@ -1615,7 +1615,7 @@ const SPANISH_PHONETIC_RULES = [
 // Helper to clean speech text for Web Speech Synthesis
 const cleanSpeechText = (text) => {
   return text
-    .replace(/[\[\]\(\)\/]/g, '')
+    .replace(/[[\]()/]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 };
@@ -1637,21 +1637,21 @@ export default function App() {
   const [masteredCards, setMasteredCards] = useState({});
 
   // Quiz state
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
 
   // Copy Feedback state
-  const [copiedDay, setCopiedDay] = useState(null);
-  const [copiedWord, setCopiedWord] = useState(null);
+  const [copiedDay, setCopiedDay] = useState<number | null>(null);
+  const [copiedWord, setCopiedWord] = useState<string | null>(null);
 
   // Audio playing state
-  const [playingText, setPlayingText] = useState(null);
+  const [playingText, setPlayingText] = useState<string | null>(null);
 
   // Voice Recognition (Speech-to-Text Microphone test)
   const [isListening, setIsListening] = useState(false);
   const [speechTranscript, setSpeechTranscript] = useState('');
-  const [speechFeedback, setSpeechFeedback] = useState(null);
-  const [activeMicWord, setActiveMicWord] = useState(null);
+  const [speechFeedback, setSpeechFeedback] = useState<{ type: string; text: string } | null>(null);
+  const [activeMicWord, setActiveMicWord] = useState<string | null>(null);
 
   // Search/Dictionary state
   const [searchQuery, setSearchQuery] = useState('');
@@ -1661,7 +1661,7 @@ export default function App() {
 
   const currentDay = ROADMAP_DATA[selectedDayIndex] || ROADMAP_DATA[0];
 
-  const speakText = (text, customSpeed = null) => {
+  const speakText = (text: string, customSpeed: number | null = null) => {
     if (!('speechSynthesis' in window)) {
       return;
     }
